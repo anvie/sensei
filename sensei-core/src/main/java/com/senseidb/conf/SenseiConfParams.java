@@ -6,6 +6,7 @@ public interface SenseiConfParams {
 	public static final String NODE_ID = "sensei.node.id";
 	public static final String PARTITIONS = "sensei.node.partitions";
 
+    public static final String SERVER_HOST = "sensei.server.host";
 	public static final String SERVER_PORT = "sensei.server.port";
 	public static final String SERVER_REQ_THREAD_POOL_SIZE = "sensei.server.requestThreadCorePoolSize";
 	public static final String SERVER_REQ_THREAD_POOL_MAXSIZE = "sensei.server.requestThreadMaxPoolSize";
