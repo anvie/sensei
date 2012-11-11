@@ -63,7 +63,7 @@ class MtUserStreamer(config:util.Map[String,String],versionComparator:Comparator
       incrementalId += 1
 
       val oid = u.as[ObjectId]("_id").toString
-      val name = u.as[String]("name")
+      val name = u.as[String]("name").toString
       val sex = {
 		u.as[Any]("sex") match {
 			case s:Boolean => s match {
@@ -79,7 +79,7 @@ class MtUserStreamer(config:util.Map[String,String],versionComparator:Comparator
       val location = u.getAsOrElse[String]("location","").toLowerCase
       val joinDate = u.as[DateTime]("_creation_time")
 
-      val fmt = DateTimeFormat.forPattern("yyyy/mm/dd")
+      val fmt = DateTimeFormat.forPattern("yyyy/MM/dd")
       val birthDateF = fmt.print(birthDate)
       val joinDateF = fmt.print(joinDate)
 

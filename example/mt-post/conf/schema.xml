@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://javasoze.github.com/sensei/schema/sensei-schema.xsd">
+
+  <table uid="id">
+	<column name="oid" type="string" />
+	<column name="creator_name" type="string" />
+	<column name="creator_sex" type="int" />
+	<column name="creator_sdescs" type="string" multi="true" delimiter="," />
+	<column name="creator_birthdate" type="string" />
+	<column name="creator_location" type="string" />
+	<!--<column name="message" type="text" index="ANALYZED" store="NO" termvector="NO" />-->
+	<column name="creation_date" type="long" />
+	<column name="likes_count" type="int" />
+	<!-- <column name="liker_user_names" type="string" multi="true" delimiter="," /> -->
+	<column name="hashtags" type="string" multi="true" delimiter="," />
+	<column name="response_count" type="int" />
+	<!-- <column name="responder_user_names" type="string" multi="true" delimiter="," /> -->
+	<column name="origin_kind" type="string" />
+	<column name="origin_id" type="string" />
+	<!-- <column name="origin_name" type="string" /> -->
+	<!-- <column name="origin_is_private" type="int" /> -->
+  </table>
+
+   <facets>
+	<facet name="creator_name" type="simple" />
+	<facet name="creator_sex" type="simple" />
+	<facet name="creator_sdescs" type="multi" />
+	<facet name="creator_birthdate" type="path" />
+	<facet name="creator_location" type="simple" />
+	<facet name="creation_date" type="simple" />
+	<facet name="likes_count" type="simple" />
+	<!-- <facet name="likes_user_names" type="multi" /> -->
+	<facet name="hashtags" type="multi" />
+	<!-- <facet name="responder_user_names" type="multi" /> -->
+	<facet name="origin_kind" type="simple" />
+	<facet name="origin_id" type="simple" />
+	<!-- <facet name="origin_name" type="simple" /> -->
+	<!-- <facet name="origin_is_private" type="simple" /> -->
+	<facet name="likes_count" type="range">
+		<params>
+			<param name="range" value="0-10" />
+			<param name="range" value="10-50" />
+			<param name="range" value="50-100" />
+			<param name="range" value="100-500" />
+			<param name="range" value="500-*" />
+		</params>
+	</facet>
+	<facet name="response_count" type="range">
+		<params>
+			<param name="range" value="0-10" />
+			<param name="range" value="10-50" />
+			<param name="range" value="50-100" />
+			<param name="range" value="100-500" />
+			<param name="range" value="500-*" />
+		</params>
+	</facet>
+   </facets>
+</schema>

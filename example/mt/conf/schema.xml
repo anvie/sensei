@@ -16,6 +16,7 @@
   </table>
 
    <facets>
+	 <facet name="oid" type="simple" />
 	 <facet name="name" type="simple" />
 	 <facet name="sex" type="simple" />
 	 <facet name="sdescs" type="multi" />
