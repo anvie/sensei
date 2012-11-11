@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://javasoze.github.com/sensei/schema/sensei-schema.xsd">
+
+  <table uid="id">
+	<column name="oid" type="string" />
+	<column name="name" type="string" />
+	<column name="sex" type="int" />
+	<column name="sdescs" type="string" multi="true" delimiter="," />
+	<column name="birthdate" type="string" />
+	<column name="location" type="string" />
+	<!-- <column name="supporter_names" type="string" multi="true" delimiter="," /> -->
+	<!-- <column name="supporting_names" type="string" multi="true" delimiter="," /> -->
+	<column name="join_date" type="string" />
+  </table>
+
+   <facets>
+	 <facet name="name" type="simple" />
+	 <facet name="sex" type="simple" />
+	 <facet name="sdescs" type="multi" />
+	 <facet name="birthdate" type="path">
+		<params>
+			<param name="separator" value="/" />
+		</params>
+	 </facet>
+	<facet name="location" type="simple" />
+	<facet name="join_date" type="path" />
+	<!-- <facet name="supporting_names" type="multi" /> -->
+	<!-- <facet name="supporter_names" type="multi" /> -->
+   </facets>
+</schema>
