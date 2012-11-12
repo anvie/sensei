@@ -10,7 +10,6 @@ import proj.zoie.impl.indexing.StreamDataProvider
 import java.util
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import collection.JavaConversions
 
 //import com.mongodb.casbah.commons.TypeImports.ObjectId
 
@@ -42,7 +41,7 @@ class MtPostStreamer(config:util.Map[String,String],versionComparator:Comparator
 
   private def getUser(id:String) = db("user").findOne(MongoDBObject("_id" -> new ObjectId(id)))
 
-  private val hashtagPatt = """^#\w+""".r
+  private val hashtagPatt = """#\w+""".r
   private val trimerPatt = """^\W+|\W+$""".r
 
   class TrimerClazz(t:String) {
@@ -59,12 +58,7 @@ class MtPostStreamer(config:util.Map[String,String],versionComparator:Comparator
 
   // trimerPatt.replaceAllIn(t, "")
   private def extractHashTags(msg:String):String = {
-    val rv = hashtagPatt.findAllIn(msg).map(_.normalize).foldLeft("")(_ + "," + _)
-
-    if(rv.length > 0)
-      rv.substring(1)
-    else
-      rv
+    hashtagPatt.findAllIn(msg).map(_.normalize).foldLeft("")(_ + "," + _).normalize
   }
 
   def next():DataEvent[JSONObject] = {
