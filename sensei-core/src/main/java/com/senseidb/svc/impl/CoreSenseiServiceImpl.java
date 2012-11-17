@@ -93,7 +93,7 @@ public class CoreSenseiServiceImpl extends AbstractSenseiCoreService<SenseiReque
 	      result.setMapReduceResult(req.getMapReduceWrapper().getResult());
 	    }
 	    SenseiHit[] senseiHits = new SenseiHit[hits.length];
-      Set<String> selectSet = senseiRequest.getSelectSet();
+      	Set<String> selectSet = senseiRequest.getSelectSet();
 	    for (int i = 0; i < hits.length; i++)
 	    {
 	      BrowseHit hit = hits[i];

@@ -19,23 +19,25 @@
 	<!-- <column name="responder_user_names" type="string" multi="true" delimiter="," /> -->
 	<column name="origin_kind" type="string" />
 	<column name="origin_id" type="string" />
+	<column name="contains_data" type="string" />
 	<!-- <column name="origin_name" type="string" /> -->
 	<!-- <column name="origin_is_private" type="int" /> -->
   </table>
 
    <facets>
+	<facet name="oid" type="simple" />
 	<facet name="creator_name" type="simple" />
 	<facet name="creator_sex" type="simple" />
 	<facet name="creator_sdescs" type="multi" />
 	<facet name="creator_birthdate" type="path" />
 	<facet name="creator_location" type="simple" />
 	<facet name="creation_date" type="simple" />
-	<facet name="likes_count" type="simple" />
 	<!-- <facet name="likes_user_names" type="multi" /> -->
 	<facet name="hashtags" type="multi" />
 	<!-- <facet name="responder_user_names" type="multi" /> -->
 	<facet name="origin_kind" type="simple" />
 	<facet name="origin_id" type="simple" />
+	<facet name="contains_data" type="simple" />
 	<!-- <facet name="origin_name" type="simple" /> -->
 	<!-- <facet name="origin_is_private" type="simple" /> -->
 	<facet name="likes_count" type="range">

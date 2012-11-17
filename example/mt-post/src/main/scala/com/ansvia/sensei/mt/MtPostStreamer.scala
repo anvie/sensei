@@ -41,10 +41,10 @@ class MtPostStreamer(config:util.Map[String,String],versionComparator:Comparator
 
   private def getUser(id:String) = db("user").findOne(MongoDBObject("_id" -> new ObjectId(id)))
 
-  private val hashtagPatt = """#\w+""".r
+  private val hashtagPatt = """#\w\w+""".r
   private val trimerPatt = """^\W+|\W+$""".r
 
-  class TrimerClazz(t:String) {
+  class ImplicitStringNormalizer(t:String) {
     def trimAll = {
       trimerPatt.replaceAllIn(t, "")
     }
@@ -52,13 +52,17 @@ class MtPostStreamer(config:util.Map[String,String],versionComparator:Comparator
       t.toLowerCase.trimAll
     }
   }
-  implicit def stringTrimer(t:String):TrimerClazz = {
-    new TrimerClazz(t)
-  }
+  implicit def stringTrimer(t:String):ImplicitStringNormalizer = 
+	new ImplicitStringNormalizer(t)
 
   // trimerPatt.replaceAllIn(t, "")
   private def extractHashTags(msg:String):String = {
     hashtagPatt.findAllIn(msg).map(_.normalize).foldLeft("")(_ + "," + _).normalize
+  }
+
+  private def getResponseCount(id:String):Int = {
+	val respCol = db("response")
+	respCol.find(MongoDBObject("_object_id" -> id)).size
   }
 
   def next():DataEvent[JSONObject] = {
@@ -97,8 +101,18 @@ class MtPostStreamer(config:util.Map[String,String],versionComparator:Comparator
         val respCount = db("user_like").count(MongoDBObject("_object_id" -> oid))
         val originKind = p.getAsOrElse[String]("origin_class", "User")
         val originId = p.getAsOrElse[String]("_origin_id", "")
+		val containsData:String = {
+			if (p.getAsOrElse[Boolean]("contains_pic", false))
+				"pic"
+			else if (p.getAsOrElse[Boolean]("contains_link", false))
+				"link"
+			else if (p.getAsOrElse[Boolean]("contains_video_link", false))
+				"video_link"
+			else ""
+		}
 
         val hashtags = extractHashTags(p.getAsOrElse[String]("message", ""))
+		val responseCount = getResponseCount(oid)
 
 
         println("processing post id " + oid + " ...")
@@ -116,6 +130,8 @@ class MtPostStreamer(config:util.Map[String,String],versionComparator:Comparator
         json.put("origin_id", originId)
         json.put("hashtags", hashtags)
         json.put("creation_date", creationDate.getMillis)
+		json.put("contains_data", containsData)
+		json.put("response_count", responseCount)
 
         evData = new DataEvent[JSONObject](json, System.currentTimeMillis().toString)
 
