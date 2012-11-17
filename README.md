@@ -1,5 +1,6 @@
 What is Sensei
 ===============
+
 ([http://www.senseidb.com/](http://www.senseidb.com/))
 
 Sensei is a distributed, elastic realtime searchable database.
@@ -38,7 +39,7 @@ Issues are tracked at:
 
 5. Starting command-line client app
 
-        bin/sensei-client.sh host port (default: localhost 8080)
+        bin/sensei-shell.sh [HOST] [PORT] (default: localhost 8080)
 
 And/Or:
 
