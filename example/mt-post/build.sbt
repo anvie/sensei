@@ -1,7 +1,7 @@
 
 name := "sensei-mt-post"
 
-version := "0.0.1"
+version := "0.0.2"
 
 scalaHome := Some(file("/opt/local/scala-2.8.1"))
 
