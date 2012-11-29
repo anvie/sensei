@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.senseidb</groupId>
 		<artifactId>sensei-parent</artifactId>
-		<version>1.5.1-SNAPSHOT</version>
+		<version>1.5.1a-SNAPSHOT</version>
 		<relativePath>sensei-parent/pom.xml</relativePath>
 	</parent>
 	
@@ -16,15 +16,15 @@
 	<description>sensei parent</description>
 	
 	<modules>
-    <module>sensei-parent</module>
-    <module>sensei-core</module>
-    <module>sensei-gateways</module>
-    <module>sensei-hadoop-indexing</module>
-    <module>sensei-federated-broker</module>
-    <!--<module>example</module>-->
-    <module>clients/java</module>
-   <module>sensei-war</module>   
-</modules>
+        <module>sensei-parent</module>
+        <module>sensei-core</module>
+        <module>sensei-gateways</module>
+        <module>sensei-hadoop-indexing</module>
+        <module>sensei-federated-broker</module>
+        <!--<module>example</module>-->
+        <module>clients/java</module>
+        <module>sensei-war</module>
+    </modules>
 
 
 	<build>

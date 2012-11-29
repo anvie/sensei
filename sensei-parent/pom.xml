@@ -5,7 +5,7 @@
 	<artifactId>sensei-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>sensei parent</name>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.5.1a-SNAPSHOT</version>
 	<description>sensei search</description>
 	<url>http://www.senseidb.com/</url>
 
@@ -190,6 +190,11 @@
         <id>releases</id>
         <name>Releases</name>
         <url>https://oss.sonatype.org/content/repositories/releases</url>
+      </repository>
+      <repository>
+        <id>Local</id>
+        <name>Local</name>
+        <url>file://${user.home}/.m2/repository</url>
       </repository>
 
 	  </repositories>

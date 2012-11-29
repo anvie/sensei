@@ -20,11 +20,16 @@ case $OS in
    *) IP="Unknown";;
 esac
 
-
-lib=$bin/../sensei-core/target/lib
-dist=$bin/../sensei-core/target
-resources=$bin/../resources
-logs=$bin/../logs
+rootdir=$bin/..
+lib=$rootdir/sensei-core/target/lib
+if [ ! -d $lib ]; then
+	lib=$rootdir/lib
+fi
+if [ -d $rootdir/sensei-core/target ]; then
+	dist=$rootdir/sensei-core/target
+fi
+resources=$rootdir/resources
+logs=$rootdir/logs
 
 if [[ ! -d $logs ]]; then
   echo "Log file does not exists, creating one..."
@@ -53,9 +58,8 @@ if [ -f $PIDFILE ]; then
   echo "File $PIDFILE exists shutdown may not be proper"
   echo "Please check PID" `cat $PIDFILE`
   echo "Make sure the node is shutdown and the file" $PIDFILE "is removed before stating the node"
- else
-  
-   java $JAVA_OPTS $JMX_OPTS $HEAP_OPTS $GC_OPTS $JAVA_DEBUG -classpath $CLASSPATH  -Dlog.home=$logs $MAIN_CLASS $1  &
+else
+  java $JAVA_OPTS $JMX_OPTS $HEAP_OPTS $GC_OPTS $JAVA_DEBUG -classpath $CLASSPATH  -Dlog.home=$logs $MAIN_CLASS $1  &
   echo $! > ${PIDFILE}
   echo "Sensei node started successfully! Logs are at $logs"
- fi
+fi
