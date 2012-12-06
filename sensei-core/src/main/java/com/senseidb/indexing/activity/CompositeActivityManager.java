@@ -1,28 +1,22 @@
+/**
+ * This software is licensed to you under the Apache License, Version 2.0 (the
+ * "Apache License").
+ *
+ * LinkedIn's contributions are made under the Apache License. If you contribute
+ * to the Software, the contributions will be deemed to have been made under the
+ * Apache License, unless you expressly indicate otherwise. Please do not make any
+ * contributions that would be inconsistent with the Apache License.
+ *
+ * You may obtain a copy of the Apache License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, this software
+ * distributed under the Apache License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Apache
+ * License for the specific language governing permissions and limitations for the
+ * software governed under the Apache License.
+ *
+ * © 2012 LinkedIn Corp. All Rights Reserved.  
+ */
 package com.senseidb.indexing.activity;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.log4j.Logger;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.store.Directory;
-import org.jboss.netty.util.internal.ConcurrentHashMap;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import proj.zoie.api.IndexReaderFactory;
-import proj.zoie.api.Zoie;
-import proj.zoie.api.ZoieIndexReader;
-import proj.zoie.api.ZoieMultiReader;
-import proj.zoie.api.ZoieSegmentReader;
 
 import com.browseengine.bobo.api.BoboIndexReader;
 import com.browseengine.bobo.facets.FacetHandler;
@@ -42,6 +36,17 @@ import com.senseidb.search.plugin.PluggableSearchEngineManager;
 import com.yammer.metrics.Metrics;
 import com.yammer.metrics.core.Counter;
 import com.yammer.metrics.core.MetricName;
+import org.apache.log4j.Logger;
+import org.apache.lucene.index.IndexReader;
+import org.jboss.netty.util.internal.ConcurrentHashMap;
+import org.json.JSONException;
+import org.json.JSONObject;
+import proj.zoie.api.IndexReaderFactory;
+import proj.zoie.api.ZoieIndexReader;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 
 /**
@@ -68,7 +73,7 @@ public class CompositeActivityManager implements PluggableSearchEngine {
       facetMappingMismatch =  Metrics.newCounter(new MetricName(CompositeActivityManager.class, "facetMappingMismatch"));
     }
     private BoboIndexTracker boboIndexTracker;
-    
+
     public CompositeActivityManager(ActivityPersistenceFactory activityPersistenceFactory) {      
       this.activityPersistenceFactory = activityPersistenceFactory;
       
@@ -162,7 +167,6 @@ public class CompositeActivityManager implements PluggableSearchEngine {
      */
     public JSONObject acceptEvent(JSONObject event, String version) {
       try {        
-        activityValues.updateVersion(version);
         if (event.opt(SenseiSchema.EVENT_TYPE_SKIP) != null  ||  SenseiSchema.EVENT_TYPE_SKIP.equalsIgnoreCase(event.optString(SenseiSchema.EVENT_TYPE_FIELD))) {
           return event;
         }
@@ -238,7 +242,7 @@ public class CompositeActivityManager implements PluggableSearchEngine {
     /* (non-Javadoc)
      * @see com.senseidb.indexing.activity.deletion.DeletionListener#onDelete(org.apache.lucene.index.IndexReader, long[])
      */
-    @Override
+//    @Override
     public void onDelete(IndexReader indexReader, long... uids) {
       activityValues.delete(uids);  
     }
@@ -288,9 +292,8 @@ public class CompositeActivityManager implements PluggableSearchEngine {
     activityValues.close();
   }
 
- 
 
-  @Override
+//  @Override
   public Set<String> getFieldNames() {
     Set<String> ret = new HashSet<String>();
     for (String field : senseiSchema.getFieldDefMap().keySet()) {
@@ -300,7 +303,7 @@ public class CompositeActivityManager implements PluggableSearchEngine {
     }
     return ret;
   }
-  @Override
+//  @Override
   public Set<String> getFacetNames() {
     Set<String> ret = new HashSet<String>();
     for (FacetDefinition facet : senseiSchema.getFacets()) {
@@ -314,7 +317,7 @@ public class CompositeActivityManager implements PluggableSearchEngine {
   }
 
 
-  @Override
+//  @Override
   public List<FacetHandler<?>> createFacetHandlers() {
     Set<String> facets = getFacetNames();
     List<FacetHandler<?>> ret = new ArrayList<FacetHandler<?>>();

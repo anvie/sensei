@@ -36,6 +36,10 @@ if [[ ! -d $logs ]]; then
   mkdir $logs
 fi
 
+if [ -z "$JMX_PORT" ]; then
+  JMX_PORT = 18889
+fi
+
 # HEAP_OPTS="-Xmx4096m -Xms2048m -XX:NewSize=1024m" # -d64 for 64-bit awesomeness
 HEAP_OPTS="-Xmx1g -Xms1g -XX:NewSize=256m"
 # HEAP_OPTS="-Xmx1024m -Xms512m -XX:NewSize=128m"
@@ -45,7 +49,7 @@ HEAP_OPTS="-Xmx1g -Xms1g -XX:NewSize=256m"
 #JAVA_DEBUG="-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=localhost:8989"
 #GC_OPTS="-XX:+UseConcMarkSweepGC -XX:+UseParNewGC"
 JAVA_OPTS="-server -d64"
-JMX_OPTS="-Djava.rmi.server.hostname=$IP -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=18889 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
+JMX_OPTS="-Djava.rmi.server.hostname=$IP -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=$JMX_PORT -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
 
 MAIN_CLASS="com.senseidb.search.node.SenseiServer"
 

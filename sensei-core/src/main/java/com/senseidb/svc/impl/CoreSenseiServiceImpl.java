@@ -1,32 +1,28 @@
+/**
+ * This software is licensed to you under the Apache License, Version 2.0 (the
+ * "Apache License").
+ *
+ * LinkedIn's contributions are made under the Apache License. If you contribute
+ * to the Software, the contributions will be deemed to have been made under the
+ * Apache License, unless you expressly indicate otherwise. Please do not make any
+ * contributions that would be inconsistent with the Apache License.
+ *
+ * You may obtain a copy of the Apache License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, this software
+ * distributed under the Apache License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Apache
+ * License for the specific language governing permissions and limitations for the
+ * software governed under the Apache License.
+ *
+ * © 2012 LinkedIn Corp. All Rights Reserved.  
+ */
 package com.senseidb.svc.impl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import com.sensei.search.req.protobuf.SenseiReqProtoSerializer;
-import org.apache.log4j.Logger;
-import org.apache.lucene.search.Query;
-
-import proj.zoie.api.ZoieIndexReader;
-import proj.zoie.api.ZoieIndexReader.SubReaderAccessor;
-import proj.zoie.api.ZoieIndexReader.SubReaderInfo;
-
-import com.browseengine.bobo.api.BoboBrowser;
-import com.browseengine.bobo.api.BoboIndexReader;
-import com.browseengine.bobo.api.BrowseException;
-import com.browseengine.bobo.api.BrowseHit;
-import com.browseengine.bobo.api.BrowseRequest;
-import com.browseengine.bobo.api.BrowseResult;
-import com.browseengine.bobo.api.MultiBoboBrowser;
+import com.browseengine.bobo.api.*;
 import com.browseengine.bobo.sort.SortCollector;
 import com.linkedin.norbert.network.JavaSerializer;
 import com.linkedin.norbert.network.Serializer;
+import com.sensei.search.req.protobuf.SenseiReqProtoSerializer;
 import com.senseidb.indexing.SenseiIndexPruner;
 import com.senseidb.indexing.SenseiIndexPruner.IndexReaderSelector;
 import com.senseidb.metrics.MetricsConstants;
@@ -41,6 +37,20 @@ import com.senseidb.util.RequestConverter;
 import com.yammer.metrics.Metrics;
 import com.yammer.metrics.core.MetricName;
 import com.yammer.metrics.core.Timer;
+import org.apache.log4j.Logger;
+import org.apache.lucene.search.Query;
+import proj.zoie.api.ZoieIndexReader;
+import proj.zoie.api.ZoieIndexReader.SubReaderAccessor;
+import proj.zoie.api.ZoieIndexReader.SubReaderInfo;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.senseidb.servlet.SenseiSearchServletParams.PARAM_RESULT_HIT_UID;
 
@@ -52,7 +62,7 @@ public class CoreSenseiServiceImpl extends AbstractSenseiCoreService<SenseiReque
 			new SenseiReqProtoSerializer();
 
 	private static final Logger logger = Logger.getLogger(CoreSenseiServiceImpl.class);
-	
+
 	private static Timer timerMetric = null;
 	static{
 		  // register prune time metric
@@ -67,7 +77,7 @@ public class CoreSenseiServiceImpl extends AbstractSenseiCoreService<SenseiReque
 	public CoreSenseiServiceImpl(SenseiCore core) {
 		super(core);
 	}
-	
+
 	private SenseiResult browse(SenseiRequest senseiRequest, MultiBoboBrowser browser, BrowseRequest req, SubReaderAccessor<BoboIndexReader> subReaderAccessor) throws BrowseException
 	  {
 	    final SenseiResult result = new SenseiResult();
@@ -193,7 +203,7 @@ public class CoreSenseiServiceImpl extends AbstractSenseiCoreService<SenseiReque
 
         	List<BoboIndexReader> validatedSegmentReaders = timerMetric.time(new Callable<List<BoboIndexReader>>(){
 
-				     @Override
+//				     @Override
 				     public List<BoboIndexReader> call() throws Exception {
 		  	        IndexReaderSelector readerSelector = pruner.getReaderSelector(request);
 		  	        List<BoboIndexReader> validatedReaders = new ArrayList<BoboIndexReader>(segmentReaders.size());

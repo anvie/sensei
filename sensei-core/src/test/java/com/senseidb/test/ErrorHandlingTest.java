@@ -1,3 +1,21 @@
+/**
+ * This software is licensed to you under the Apache License, Version 2.0 (the
+ * "Apache License").
+ *
+ * LinkedIn's contributions are made under the Apache License. If you contribute
+ * to the Software, the contributions will be deemed to have been made under the
+ * Apache License, unless you expressly indicate otherwise. Please do not make any
+ * contributions that would be inconsistent with the Apache License.
+ *
+ * You may obtain a copy of the Apache License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, this software
+ * distributed under the Apache License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Apache
+ * License for the specific language governing permissions and limitations for the
+ * software governed under the Apache License.
+ *
+ * © 2012 LinkedIn Corp. All Rights Reserved.  
+ */
 package com.senseidb.test;
 
 import java.io.Serializable;
@@ -26,7 +44,7 @@ public class ErrorHandlingTest extends TestCase {
     public void init(JSONObject params) {}
     public Serializable map(int[] docIds, int docIdCount, long[] uids, FieldAccessor accessor, FacetCountAccessor facetCountAccessor) {return new ArrayList();}
     public List<Serializable> combine(List<Serializable> mapResults, CombinerStage combinerStage) {return new ArrayList();}
-    public Serializable reduce(List<Serializable> combineResults) {return new ArrayList();}
+    public Serializable reduce(List<Serializable> combineResults) {return new ArrayList<Serializable>();}
     public JSONObject render(Serializable reduceResult) {return new JSONObject();}    
   }
   public static class test1JsonError extends MapReduceAdapter {

@@ -7,7 +7,13 @@ then
 	exit 1
 fi
 
-for file in $base_dir/sensei-core/target/lib/*.jar;
+if [ -d $base_dir/sensei-core/target/lib ]; then
+    JARS=$base_dir/sensei-core/target/lib/*.jar
+elif [ -d $base_dir/lib ]; then
+    JARS=$base_dir/lib/*.jar
+fi
+
+for file in $JARS;
 do
   CLASSPATH=$CLASSPATH:$file
 done

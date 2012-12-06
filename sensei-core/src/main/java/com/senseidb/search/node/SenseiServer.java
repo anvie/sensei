@@ -1,18 +1,22 @@
+/**
+ * This software is licensed to you under the Apache License, Version 2.0 (the
+ * "Apache License").
+ *
+ * LinkedIn's contributions are made under the Apache License. If you contribute
+ * to the Software, the contributions will be deemed to have been made under the
+ * Apache License, unless you expressly indicate otherwise. Please do not make any
+ * contributions that would be inconsistent with the Apache License.
+ *
+ * You may obtain a copy of the Apache License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, this software
+ * distributed under the Apache License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Apache
+ * License for the specific language governing permissions and limitations for the
+ * software governed under the Apache License.
+ *
+ * © 2012 LinkedIn Corp. All Rights Reserved.  
+ */
 package com.senseidb.search.node;
-
-import java.io.File;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.management.StandardMBean;
-
-import org.apache.log4j.Logger;
-import org.mortbay.jetty.Server;
-
-import proj.zoie.api.DataProvider;
 
 import com.linkedin.norbert.javacompat.cluster.ClusterClient;
 import com.linkedin.norbert.javacompat.cluster.Node;
@@ -28,6 +32,17 @@ import com.senseidb.svc.impl.CoreSenseiServiceImpl;
 import com.senseidb.svc.impl.SenseiCoreServiceMessageHandler;
 import com.senseidb.svc.impl.SysSenseiCoreServiceImpl;
 import com.senseidb.util.NetUtil;
+import org.apache.log4j.Logger;
+import org.mortbay.jetty.Server;
+import proj.zoie.api.DataProvider;
+
+import javax.management.StandardMBean;
+import java.io.File;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 
 public class SenseiServer {
@@ -37,16 +52,16 @@ public class SenseiServer {
     private static final String UNAVAILABLE = "unavailable";
     private static final String DUMMY_OUT_IP = "74.125.224.0";
 
-    private int _id;
-    private String _defaultHost;
-    private int _port;
-    private int[] _partitions;
-    private NetworkServer _networkServer;
-    private ClusterClient _clusterClient;
-    private final SenseiCore _core;
-    protected volatile Node _serverNode;
-    private final CoreSenseiServiceImpl _innerSvc;
-    private final List<AbstractSenseiCoreService<AbstractSenseiRequest, AbstractSenseiResult>> _externalSvc;
+  private int _id;
+  private String _defaultHost;
+  private int _port;
+  private int[] _partitions;
+  private NetworkServer _networkServer;
+  private ClusterClient _clusterClient;
+  private final SenseiCore _core;
+  protected volatile Node _serverNode;
+//    private final CoreSenseiServiceImpl _innerSvc;
+  private final List<AbstractSenseiCoreService<AbstractSenseiRequest, AbstractSenseiResult>> _externalSvc;
 
     //private Server _adminServer;
 
@@ -81,7 +96,7 @@ public class SenseiServer {
         _networkServer = networkServer;
         _clusterClient = clusterClient;
 
-        _innerSvc = new CoreSenseiServiceImpl(senseiCore);
+//        _innerSvc = new CoreSenseiServiceImpl(senseiCore);
         _externalSvc = externalSvc;
     }
 
@@ -124,11 +139,11 @@ public class SenseiServer {
       {
         adminLink.append("http://").append(_adminServer.getConnectors()[0].getHost()).append(":")
                  .append(_adminServer.getConnectors()[0].getPort());
-      }
-
-      return new SenseiNodeInfo(_id, _partitions, _serverNode.getUrl(), adminLink.toString());
     }
-    */
+
+    return new SenseiNodeInfo(_id, _partitions, _serverNode.getUrl(), adminLink.toString());
+  }
+  */
 
     public void shutdown(){
         try {
@@ -288,17 +303,17 @@ public class SenseiServer {
     private SenseiServerAdminMBean getAdminMBean()
     {
         return new SenseiServerAdminMBean(){
-            @Override
+//            @Override
             public int getId()
             {
                 return _id;
             }
-            @Override
+//            @Override
             public int getPort()
             {
                 return _port;
             }
-            @Override
+//            @Override
             public String getPartitions()
             {
                 StringBuffer sb = new StringBuffer();
@@ -310,12 +325,12 @@ public class SenseiServer {
                 }
                 return sb.toString();
             }
-            @Override
+//            @Override
             public boolean isAvailable()
             {
                 return SenseiServer.this.isAvailable();
             }
-            @Override
+//            @Override
             public void setAvailable(boolean available)
             {
                 SenseiServer.this.setAvailable(available);

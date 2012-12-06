@@ -1,20 +1,37 @@
+/**
+ * This software is licensed to you under the Apache License, Version 2.0 (the
+ * "Apache License").
+ *
+ * LinkedIn's contributions are made under the Apache License. If you contribute
+ * to the Software, the contributions will be deemed to have been made under the
+ * Apache License, unless you expressly indicate otherwise. Please do not make any
+ * contributions that would be inconsistent with the Apache License.
+ *
+ * You may obtain a copy of the Apache License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, this software
+ * distributed under the Apache License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Apache
+ * License for the specific language governing permissions and limitations for the
+ * software governed under the Apache License.
+ *
+ * © 2012 LinkedIn Corp. All Rights Reserved.  
+ */
 package com.senseidb.svc.impl;
-
-import java.io.IOException;
-import java.util.List;
-
-import com.sensei.search.req.protobuf.SenseiSysReqProtoSerializer;
-import org.apache.log4j.Logger;
 
 import com.browseengine.bobo.api.BoboBrowser;
 import com.browseengine.bobo.api.BoboIndexReader;
 import com.browseengine.bobo.api.MultiBoboBrowser;
 import com.linkedin.norbert.network.JavaSerializer;
 import com.linkedin.norbert.network.Serializer;
+import com.sensei.search.req.protobuf.SenseiSysReqProtoSerializer;
 import com.senseidb.search.node.SenseiCore;
 import com.senseidb.search.node.SenseiQueryBuilderFactory;
 import com.senseidb.search.req.SenseiRequest;
 import com.senseidb.search.req.SenseiSystemInfo;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.util.List;
 
 public class SysSenseiCoreServiceImpl extends AbstractSenseiCoreService<SenseiRequest, SenseiSystemInfo>{
 	public static final Serializer<SenseiRequest, SenseiSystemInfo> JAVA_SERIALIZER =
@@ -28,7 +45,13 @@ public class SysSenseiCoreServiceImpl extends AbstractSenseiCoreService<SenseiRe
   public SysSenseiCoreServiceImpl(SenseiCore core) {
     super(core);
   }
-  
+
+//  @Override
+  protected String getMetricScope()
+  {
+    return "sys";
+  }
+
   @Override
   public SenseiSystemInfo handlePartitionedRequest(SenseiRequest request,
       List<BoboIndexReader> readerList,SenseiQueryBuilderFactory queryBuilderFactory) throws Exception {

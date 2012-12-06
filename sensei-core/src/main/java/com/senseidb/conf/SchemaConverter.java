@@ -1,10 +1,25 @@
+/**
+ * This software is licensed to you under the Apache License, Version 2.0 (the
+ * "Apache License").
+ *
+ * LinkedIn's contributions are made under the Apache License. If you contribute
+ * to the Software, the contributions will be deemed to have been made under the
+ * Apache License, unless you expressly indicate otherwise. Please do not make any
+ * contributions that would be inconsistent with the Apache License.
+ *
+ * You may obtain a copy of the Apache License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, this software
+ * distributed under the Apache License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Apache
+ * License for the specific language governing permissions and limitations for the
+ * software governed under the Apache License.
+ *
+ * © 2012 LinkedIn Corp. All Rights Reserved.  
+ */
 package com.senseidb.conf;
 
-import java.io.File;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.senseidb.util.JSONUtil.FastJSONArray;
+import com.senseidb.util.JSONUtil.FastJSONObject;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -14,8 +29,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.senseidb.util.JSONUtil.FastJSONArray;
-import com.senseidb.util.JSONUtil.FastJSONObject;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
 
 public class SchemaConverter
 {
@@ -78,7 +94,9 @@ public class SchemaConverter
 
           columnObj.put("multi", Boolean.parseBoolean(column.getAttribute("multi")));
           columnObj.put("activity", Boolean.parseBoolean(column.getAttribute("activity")));
-          String delimString = column.getAttribute("delimiter");
+          columnObj.put("wildcard", Boolean.parseBoolean(column.getAttribute("wildcard")));
+
+            String delimString = column.getAttribute("delimiter");
           if (delimString != null && delimString.trim().length() > 0)
           {
             columnObj.put("delimiter", delimString);
