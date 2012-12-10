@@ -37,7 +37,7 @@ if [[ ! -d $logs ]]; then
 fi
 
 if [ -z "$JMX_PORT" ]; then
-  JMX_PORT = 18889
+  JMX_PORT=18889
 fi
 
 # HEAP_OPTS="-Xmx4096m -Xms2048m -XX:NewSize=1024m" # -d64 for 64-bit awesomeness
@@ -56,13 +56,19 @@ MAIN_CLASS="com.senseidb.search.node.SenseiServer"
 
 CLASSPATH=$resources/:$lib/*:$dist/*:$1/ext/*
 
-PIDFILE=/tmp/sensei-search-node.pid
+if [ -z "$2" ]; then
+    PIDFILE=/tmp/sensei-search-node.pid
+else
+    PIDFILE=$2
+fi
 
 if [ -f $PIDFILE ]; then
   echo "File $PIDFILE exists shutdown may not be proper"
   echo "Please check PID" `cat $PIDFILE`
   echo "Make sure the node is shutdown and the file" $PIDFILE "is removed before stating the node"
 else
+  echo "$JAVA_OPTS $JMX_OPTS $HEAP_OPTS $GC_OPTS $JAVA_DEBUG -classpath $CLASSPATH  -Dlog.home=$logs $MAIN_CLASS $1"
+  echo "pid file: $PIDFILE"
   java $JAVA_OPTS $JMX_OPTS $HEAP_OPTS $GC_OPTS $JAVA_DEBUG -classpath $CLASSPATH  -Dlog.home=$logs $MAIN_CLASS $1  &
   echo $! > ${PIDFILE}
   echo "Sensei node started successfully! Logs are at $logs"
